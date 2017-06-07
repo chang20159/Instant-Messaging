@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>iframe长轮询</title>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="./jquery-3.1.1.js"></script>
+		<style type="text/css">
+			#long-connection-iframe{
+				display: none;
+			}
+		</style>
+
+	</head>
+	<body>
+		<div id="container">
+			<iframe id="long-connection-iframe" "></iframe>
+		</div>
+		<script type="text/javascript">
+
+			function iframe_long(){
+				var url = 'http://localhost:8080/iframe/long_connection?requestTime=' + new Date().getTime();
+				$('#long-connection-iframe').attr('src',url);
+			}
+
+			iframe_long();
+
+			// window.setInterval(iframe_long,3000);
+			
+			window.addEventListener('message',function(event){
+				var data = event.data;
+				var origin = event.origin;
+				if(event.origin == "http://localhost:8080"){
+					$('#container').append(data);	
+				}
+			})
+			// 超时时间怎么设置？
+		</script>
+	</body>
+</html>

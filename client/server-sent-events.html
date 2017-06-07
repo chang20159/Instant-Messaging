@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>服务器推送事件 Server-sent Events</title>
+	<script type="text/javascript" src="./jquery-3.1.1.js"></script>
+</head>
+<body>
+	<div id="container"></div>
+	<script type="text/javascript">
+		var source = new EventSource('http://localhost:8080/server-sent-events?requestTime=' + new Date().getTime());
+
+		source.onmessage = function(e){
+			$('#container').append(e.data+"<br/>");
+		};
+
+		source.onopen = function(e){
+			switch(e.target.readyState){
+				case EventSource.CONNECTING:
+					$('#container').append('****** connected ******<br/>');
+					break;
+				case EventSource.OPEN:
+					$('#container').append('****** open ******<br/>');
+					break;
+			    case EventSource.CLOSED:
+					$('#container').append('****** closed ******<br/>');
+					break;
+				default:
+				     break;
+			}
+			
+		}
+
+		source.onerror = function(err){
+			// $('#container').append("err: " + err +"<br/>");
+		}
+	</script>
+</body>
+</html>

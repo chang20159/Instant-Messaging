@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ajax长轮询</title>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="./jquery-3.1.1.js"></script>
+		<script type="text/javascript">
+			(function longPolling(){
+				$.ajax({
+					url : 'http://localhost:8080/ajax/long-polling',
+					data : { requestTime : new Date().getTime() },
+					type : 'GET',
+					timeout : 20000,
+					dataType : 'text',
+					success : function(data,textStatus){
+						$('#container').append(`status: ${textStatus},  data: { ${data} }<br/>`);
+						longPolling();
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown){
+						$('#container').append(`status:${textStatus}, errorThrown: 【 ${errorThrown} 】<br/>`);
+						longPolling();
+					}
+				});
+			})();
+		</script>
+	</head>
+	<body>
+		<div id="container"></div>
+	</body>
+</html>

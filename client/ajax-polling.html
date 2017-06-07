@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ajax轮询</title>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="./jquery-3.1.1.js"></script>
+		<script type="text/javascript">
+			window.setInterval(function(){
+				var url = 'http://localhost:8080/ajax/polling';
+				$.get(url,{requestTime:new Date().getTime()},function(data){
+					$('#container').append(data + "<br/>")
+				});
+			},2000)
+		</script>
+	</head>
+	<body>
+		<div id="container"></div>
+	</body>
+</html>

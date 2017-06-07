@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="backend-for-frontend-web:war">
+    <output-path>$PROJECT_DIR$/backend-for-frontend-web/target</output-path>
+    <root id="archive" name="backend-for-frontend-web.war">
+      <element id="artifact" artifact-name="backend-for-frontend-web:war exploded" />
+    </root>
+  </artifact>
+</component>

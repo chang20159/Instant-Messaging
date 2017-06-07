@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+
+	<script type="text/javascript" src="./jquery-3.1.1.js"></script>
+</head>
+<body>
+	<p>先在本地IDE打开demo/backend-for-frontend启动Tomcat</p>
+	<form>
+		<label for="user">用户名：</label>
+		<select id="user">
+			<option value="1992" name="user">chang</option>
+			<option value="1990" name="user">chen</option>
+		</select>
+		<label for="password">密码：</label>
+		<input type="password" id="password" value="123456">
+		<input type="submit" value="登录" onclick="login()">
+	</form>
+	<script type="text/javascript">
+		function login(){
+			var myuid = $('#user').val();
+			$.ajax({
+				url : 'http://localhost:8080/login',
+				data : { 
+					id : myuid,
+					password:$('#password').val()
+				},
+				type : 'POST',
+				xhrFields: {
+				  withCredentials: true
+				},
+				timeout : 20000,
+				success : function(data,textStatus){
+					if(data.code == 200){
+						// alert("登录成功");
+						
+						window.open("./chat.html?uid="+ (myuid == 1992 ? 1990: 1992 ));
+					}else{
+						alert(data.msg || "登录失败");
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+					alert("网络错误");
+				}
+			});
+		}
+	</script>
+</body>
+</html>
